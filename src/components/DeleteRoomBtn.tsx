@@ -3,13 +3,11 @@ import React from 'react'
 import { deleteRoom } from '@/app/actions/deleteRoom'
 import { FaTrash } from 'react-icons/fa'
 import { toast } from 'react-toastify'
-import { useRouter } from 'next/navigation'
 interface PropsInterface {
     roomId: string
 }
 const DeleteRoomBtn = (props: PropsInterface) => {
     const { roomId } = props
-    const router = useRouter()
     const handleDelete = async () => {
         const confirmed = window.confirm('Are you sure you want to delete this room?')
         if (confirmed) {
@@ -17,7 +15,6 @@ const DeleteRoomBtn = (props: PropsInterface) => {
                 const response = await deleteRoom(roomId)
                 if ('success' in response) {
                     toast.success(response.success)
-                    router.push('/')
                 }
                 if ('error' in response) {
                     toast.error(response.error)
