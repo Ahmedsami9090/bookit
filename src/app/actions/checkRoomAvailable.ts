@@ -46,6 +46,7 @@ export async function checkRoomAvailable(roomId: string, check_in: string, check
                 console.log('true');
                 return true
             })
+        }
         
     }
     catch (error) {
