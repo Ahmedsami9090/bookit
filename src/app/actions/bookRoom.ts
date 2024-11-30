@@ -28,9 +28,7 @@ export async function bookRoom(prevData: { error: string } | { success: string }
         const checkInCombine  =`${checkInDate}T${checkInTime}`
         const checkOutCombine  =`${checkOutDate}T${checkOutTime}`
         const isAvailable = await checkRoomAvailable(roomId.toString(),checkInCombine,checkOutCombine)
-        console.log('is available', isAvailable);
         if (!isAvailable){
-            console.log('is available xx', isAvailable);
             return {
                 error : 'This room is already booked for the selected time'
             }

@@ -12,7 +12,8 @@ interface ParamsInterface {
 const RoomDetails = async ({ params }: ParamsInterface) => {
   const { id } = await params
   const room = await getRoomInfo(id)
-  // const room = rooms.find((room) => room.$id == id)
+  console.log('room is ', room);
+  console.log('id is ', id);
   if (!room) {
     return (
       <Heading title='Room not Found' />
@@ -21,7 +22,7 @@ const RoomDetails = async ({ params }: ParamsInterface) => {
   const bucketID = process.env.NEXT_PUBLIC_APPWRITE_STORAGE_BUCKET_ROOMS
   const projectID = process.env.NEXT_PUBLIC_APPWRITE_PROJECT
   const imageUrl = `https://cloud.appwrite.io/v1/storage/buckets/${bucketID}/files/${room.image}/view?project=${projectID}`
-  const imgSrc = room.image ? imageUrl : ''
+  const imgSrc = imageUrl
   return (
     <>
       <Heading title={room.name} />
@@ -75,6 +76,7 @@ const RoomDetails = async ({ params }: ParamsInterface) => {
         <BookingForm room={room} />
       </div>
     </>
+
   )
 }
 export default RoomDetails

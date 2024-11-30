@@ -14,8 +14,10 @@ export async function addNewRoom(prevState: { error: string } | { success: strin
             }
         }
         let imageID;
-        const image = formData.get('image') as File || 'no-image.svg'
-        if(image){
+        const image = formData.get('image') as File
+        if(image.name == 'undefined'){
+            imageID = 'no-image-uploaded'
+        }else{
             try {
                 const response = await storage.createFile(
                     process.env.NEXT_PUBLIC_APPWRITE_STORAGE_BUCKET_ROOMS!,
@@ -24,14 +26,9 @@ export async function addNewRoom(prevState: { error: string } | { success: strin
                 )
                 imageID = response.$id
             } catch (error) {
-                
                 return{
                     error : `Error uploading image, ${error}`
                 }
-            }
-        }else {
-            return {
-                error : "No image is added or error uploading image"
             }
         }
         const name = formData.get('name')
@@ -40,7 +37,6 @@ export async function addNewRoom(prevState: { error: string } | { success: strin
         const location = formData.get('location')
         const availability = formData.get('availability')
         const amenities = formData.get('amenities')
-
         await databases.createDocument(
             process.env.NEXT_PUBLIC_APPWRITE_DATABASE || '',
             process.env.NEXT_PUBLIC_APPWRITE_COLLECTIONS_ROOMS || '',

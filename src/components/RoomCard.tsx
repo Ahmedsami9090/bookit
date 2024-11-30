@@ -8,7 +8,7 @@ const RoomCard = (props: PropsInterface) => {
     const bucketID = process.env.NEXT_PUBLIC_APPWRITE_STORAGE_BUCKET_ROOMS
     const projectID = process.env.NEXT_PUBLIC_APPWRITE_PROJECT
     const imageUrl = `https://cloud.appwrite.io/v1/storage/buckets/${bucketID}/files/${room.image}/view?project=${projectID}`
-    const imgSrc = room.image? imageUrl : ''
+    const imgSrc = imageUrl
     return (
         <>
             <div

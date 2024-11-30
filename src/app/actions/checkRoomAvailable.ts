@@ -1,10 +1,10 @@
 'use server'
-import { redirect } from "next/navigation";
-import { createSessionClient } from "../../../config/appwrite";
-import { cookies } from "next/headers";
-import { Query } from "node-appwrite";
 import { Booking } from "@/types/types";
 import { DateTime } from "luxon";
+import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
+import { Query } from "node-appwrite";
+import { createSessionClient } from "../../../config/appwrite";
 
 function toUTCDateTime(dateString: string) {
     return DateTime.fromISO(dateString, {
@@ -34,24 +34,19 @@ export async function checkRoomAvailable(roomId: string, check_in: string, check
         if (bookings.length == 0) {
             console.log('length is 0');
             return true
-        }else{
-            bookings.forEach(booking => {
+        }
+            for(let booking of bookings) {
                 const bookingCheckInDateTime = toUTCDateTime(booking.check_in.toString())
                 const bookingCheckOutDateTime = toUTCDateTime(booking.check_out.toString())
                 if (checkDateTimeOverlap(checkInTime, checkOutTime,
                     bookingCheckInDateTime, bookingCheckOutDateTime)) {
-                    console.log('false');
                     return false
                 }
-                console.log('true');
-                return true
-            })
+            }
+            return true
         }
-        
-    }
     catch (error) {
-        return {
-            error: `Failed to check for availability, ${error}`
-        }
+        console.log(error)
+        return false
     }
 }
