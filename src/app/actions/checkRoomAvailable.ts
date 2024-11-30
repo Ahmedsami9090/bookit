@@ -35,7 +35,7 @@ export async function checkRoomAvailable(roomId: string, check_in: string, check
             console.log('length is 0');
             return true
         }
-            for(let booking of bookings) {
+            for(const booking of bookings) {
                 const bookingCheckInDateTime = toUTCDateTime(booking.check_in.toString())
                 const bookingCheckOutDateTime = toUTCDateTime(booking.check_out.toString())
                 if (checkDateTimeOverlap(checkInTime, checkOutTime,
